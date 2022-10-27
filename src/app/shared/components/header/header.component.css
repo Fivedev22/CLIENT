@@ -1,0 +1,16 @@
+ul li {
+    list-style: none;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+span {
+    padding: 0px 10px;
+}
+
+mat-toolbar {
+    background-color: #fff;
+}

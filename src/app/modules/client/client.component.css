@@ -1,0 +1,38 @@
+table {
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
+    padding: 20px;
+}
+
+.content-client button {
+    background-color: #898989;
+    color: #FFFFFF;
+    font-weight: 400;
+    border-radius: 5px;
+}
+
+.mat-paginator {
+    border-radius: 0px 0px 10px 10px;
+}
+
+.mat-form-field {
+    width: 260px !important;
+}
+
+.content-client {
+    width: 100%;
+    padding: 10px 0px;
+}
+
+.content-table-client {
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #F4F5F7;
+}
+
+.content-table-client button {
+    border: none;
+    background-color: transparent;
+    margin: 0px;
+    cursor: pointer;
+}
