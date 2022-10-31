@@ -3,22 +3,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DefaultModule } from './layouts/default/default.module';
-import { LoginComponent } from './modules/auth/pages/login/login.component';
-import { ResetPasswordComponent } from './modules/auth/pages/reset-password/reset-password.component';
-
+import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DefaultModule,
+    AuthModule,
+    DashboardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

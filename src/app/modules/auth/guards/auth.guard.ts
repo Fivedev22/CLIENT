@@ -14,8 +14,10 @@ export class AuthGuard implements CanActivate {
 
 
   canActivate(): boolean {
-    return true
+    if (!this.authService.isAuth()) {
+      this.router.navigate([''])
+      return false
+    }
+    return true;
   }
-  // todo CAN ACTIVATE HACER
-
 }

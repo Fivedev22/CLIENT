@@ -16,7 +16,7 @@ table {
 }
 
 .mat-form-field {
-    width: 260px !important;
+    min-width: 260px !important;
 }
 
 .content-client {
@@ -35,4 +35,8 @@ table {
     background-color: transparent;
     margin: 0px;
     cursor: pointer;
+}
+
+.mat-dialog-content .mat-form-field {
+    min-width: 100% !important;
 }

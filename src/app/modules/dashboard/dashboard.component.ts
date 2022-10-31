@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  sideBarOpen = true;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  sideBarToggler(event: Event) {
+    this.sideBarOpen = !this.sideBarOpen;
+  }
 }

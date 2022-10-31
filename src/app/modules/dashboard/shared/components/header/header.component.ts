@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleSideBar() {
+    console.log('hello world');
     this.toggleSideBarForMe.emit();
   }
 

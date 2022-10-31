@@ -1,9 +1,8 @@
 <h1>Cliente</h1>
-
 <div class="content-client">
     <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-        <button mat-stroked-button>Nuevo</button>
-        <mat-form-field>
+        <button mat-stroked-button (click)="openDialogWithoutRef()">Nuevo</button>
+        <mat-form-field appearance="outline">
             <mat-label>Buscar</mat-label>
             <input matInput placeholder="Ex. Juan" (keyup)="applyFilter($event)">
             <div matSuffix mat-icon.button>
@@ -61,3 +60,28 @@
     </table>
     <mat-paginator [length]="clients.length" [pageSize]="5" [pageSizeOptions]="[5,10,25,100]"></mat-paginator>
 </div>
+<ng-template #secondDialog>
+    <div>
+        <h1>Registrar</h1>
+        <!-- <button mat-button mat-dialog-close mat-icon>
+            <mat-icon>close</mat-icon>
+        </button> -->
+    </div>
+    <div mat-dialog-content>
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Ingrese su nombre">
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Apellido</mat-label>
+                <input matInput placeholder="Ingrese su apellido">
+            </mat-form-field>
+        </p>
+    </div>
+    <!-- <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+    </div> -->
+</ng-template>

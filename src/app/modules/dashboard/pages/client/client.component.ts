@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import Swal from 'sweetalert2'
 
 interface IClient {
   nombre?: string,
@@ -28,9 +30,9 @@ export class ClientComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild('secondDialog') secondDialog!: TemplateRef<any>;
 
-
-  constructor() {
+  constructor(public matDialog: MatDialog) {
     this.clients = [
       {
         nombre: 'Juan',
@@ -66,6 +68,19 @@ export class ClientComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-
+  openalert() {
+    Swal.fire({
+      title: 'هل تريد الاستمرار؟',
+      icon: 'question',
+      iconHtml: '؟',
+      confirmButtonText: 'نعم',
+      cancelButtonText: 'لا',
+      showCancelButton: true,
+      showCloseButton: true
+    })
+  }
+  openDialogWithoutRef() {
+    this.matDialog.open(this.secondDialog, { width: '500px' });
+  }
 
 }

@@ -29,7 +29,7 @@ export class AuthService {
     return this.http.put(`${this.AUTH_URL}restablecer-contrasenia`, body)
   }
 
-  private isAuth(): boolean {
+  public isAuth(): boolean {
     const token: any = localStorage.getItem('token');
     if (this.jwtHelper.isTokenExpired(token) || !localStorage.getItem('token')) {
       return false;
