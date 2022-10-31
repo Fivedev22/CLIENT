@@ -1,1 +1,13 @@
-<p>login works!</p>
+<form [formGroup]="formularioIngreso" (submit)="onLogin()">
+  <div fxFlex fxLayout="column" fxLayoutAlign="space-between center">
+    <mat-form-field appearance="outline">
+      <mat-label>Usuario</mat-label>
+      <input matInput placeholder="Ingrese su usuario" formControlName="usuario">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput placeholder="Ingrese su contraseña" formControlName="contrasenia">
+    </mat-form-field>
+    <button type="submit" mat-raised-button [disabled]="formularioIngreso.invalid">Ingresar</button>
+  </div>
+</form>
