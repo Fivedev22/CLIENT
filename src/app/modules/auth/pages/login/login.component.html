@@ -1,13 +1,41 @@
-<form [formGroup]="formularioIngreso" (submit)="onLogin()">
-  <div fxFlex fxLayout="column" fxLayoutAlign="space-between center">
-    <mat-form-field appearance="outline">
-      <mat-label>Usuario</mat-label>
-      <input matInput placeholder="Ingrese su usuario" formControlName="usuario">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Contraseña</mat-label>
-      <input matInput placeholder="Ingrese su contraseña" formControlName="contrasenia">
-    </mat-form-field>
-    <button type="submit" mat-raised-button [disabled]="formularioIngreso.invalid">Ingresar</button>
-  </div>
-</form>
+<main class="container">
+  <section class="container-form">
+
+    <h2>Inicio de sesión</h2>
+    <form [formGroup]="formularioIngreso" (submit)="onLogin()" class="form">
+      <div fxFlex fxLayout="column" fxLayoutAlign="space-between" class="custom">
+        <mat-form-field appearance="outline">
+          <mat-label>Usuario</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese su usuario"
+            formControlName="usuario"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese su contraseña"
+            formControlName="contrasenia"
+            type="password"
+          />
+        </mat-form-field>
+        <button
+          type="submit"
+          mat-raised-button
+          [disabled]="formularioIngreso.invalid"
+          color="primary"
+        >
+          Ingresar
+        </button>
+      </div>
+    </form>
+    <div class="container-forgot-password">
+
+      <a routerLink="/login/forgot-password" class="text-forgot-password">
+        <p>¿Olvidaste tu contraseña?</p>
+      </a>
+    </div>
+  </section>
+</main>

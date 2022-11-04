@@ -6,12 +6,15 @@ import { SharedModule } from './shared/shared.module';
 import { MaterialModule } from 'src/app/utils/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DashboardComponent } from './dashboard.component';
+import { ReservasComponent } from './pages/reservas/reservas.component';
+
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    ClientComponent
+    ClientComponent,
+    ReservasComponent,
   ],
   imports: [
     CommonModule,

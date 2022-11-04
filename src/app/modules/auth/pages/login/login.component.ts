@@ -1,85 +1,113 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IIngresar } from '../../models';
-import { AuthService, TokenService } from '../../services/index'
+import { AuthService, TokenService } from '../../services/index';
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent{
-
+export class LoginComponent {
   public formularioIngreso!: FormGroup;
 
   constructor(
-     private authService: AuthService,
+    private authService: AuthService,
     private tokenService: TokenService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.formularioIngreso = this.initForm();
   }
 
-
   onLogin(): void {
-     const datosUsuario = new IIngresar(
-       this.formularioIngreso.get('usuario')?.value,
-       this.formularioIngreso.get('contrasenia')?.value
-     );
+    const datosUsuario = new IIngresar(
+      this.formularioIngreso.get('usuario')?.value,
+      this.formularioIngreso.get('contrasenia')?.value
+    );
 
+    this.authService.ingresar(datosUsuario).subscribe(
+      (data) => {
+        if (!data) {
+          this.AlertError();
+        } else {
+          this.AlertSuccess();
+          localStorage.setItem(
+            'name',
+            this.formularioIngreso.get('usuario')?.value
+          );
 
-     this.authService.ingresar(datosUsuario)
-       .subscribe((data) => {
+          setTimeout(() => {
+            this.tokenService.setToken(data.mensaje);
+            localStorage.setItem('token', data.mensaje);
+            this.router.navigate(['/dashboard']);
+          }, 1900);
+        }
+      },
+      (error) => {
+        this.AlertError();
+      }
+    );
+  }
 
-        console.log(data)
+  initForm(): FormGroup {
+    return this.formBuilder.group({
+      usuario: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(30),
+        ],
+      ],
+      contrasenia: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(100),
+        ],
+      ],
+    });
+  }
 
-         if (!data) {
+  AlertError() {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 2000,
+      background: '#F25D5D',
+      color: '#FFF',
+      timerProgressBar: true,
+    });
 
-           alert('error....')
-         }
-         else {
-            //opcional
-           localStorage.setItem('name', this.formularioIngreso.get('usuario')?.value)
+    Toast.fire({
+      icon: 'warning',
+      title: 'Usuario o contraseña incorrectos',
+      iconColor: '#FFF',
+    });
+  }
 
-         /*   setTimeout(() => {
-              this.tokenService.setToken(data);
-             this.router.navigate(['/dashboard']);
-           }, 1900)
- */
+  AlertSuccess() {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      background: '#75CB8D',
+      color: '#FFF',
+    });
 
-         }
-
-       })
-   }
-
-
-
-   initForm(): FormGroup {
-     return this.formBuilder.group(
-       {
-         usuario: [
-           '',
-           [
-             Validators.required,
-             Validators.minLength(10),
-             Validators.maxLength(30)
-           ]
-         ],
-         contrasenia: [
-           '',
-           [
-             Validators.required,
-             Validators.minLength(10),
-             Validators.maxLength(100)
-           ]
-         ]
-       }
-     )
-   }
-
+    Toast.fire({
+      icon: 'success',
+      title: `Autenticación correcta`,
+      iconColor: '#fff',
+    });
+  }
 }
