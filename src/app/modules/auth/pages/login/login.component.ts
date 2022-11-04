@@ -22,6 +22,9 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.formularioIngreso = this.initForm();
+    let token =  localStorage.getItem('token');
+
+    token ?  this.router.navigate(['/dashboard'])  : null
   }
 
   onLogin(): void {
@@ -107,6 +110,7 @@ export class LoginComponent {
     Toast.fire({
       icon: 'success',
       title: `Autenticación correcta`,
+      text: "Toast with custom target",
       iconColor: '#fff',
     });
   }

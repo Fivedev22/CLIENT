@@ -46,6 +46,7 @@ export class ForgotPasswordComponent implements OnInit {
    
       if(!data){
         this.AlertError();
+        alert('ups...')
       }else{
         this.AlertSuccess();
         console.log(data.msg);
@@ -55,9 +56,11 @@ export class ForgotPasswordComponent implements OnInit {
      
     },
     error => {
-      console.log(error)
-   
-    })
+      this.AlertError();
+     
+    }
+    
+    )
 
   }
 
