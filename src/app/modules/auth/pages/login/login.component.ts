@@ -36,9 +36,9 @@ export class LoginComponent {
     this.authService.ingresar(datosUsuario).subscribe(
       (data) => {
         if (!data) {
-          this.AlertError();
+          this.Alert('Datos incorrectos', 'warning', '#F25D5D', '#fff' );
         } else {
-          this.AlertSuccess();
+          this.Alert('Autenticación correcta', 'success', '#75CB8D', '#fff' );
           localStorage.setItem(
             'name',
             this.formularioIngreso.get('usuario')?.value
@@ -52,7 +52,7 @@ export class LoginComponent {
         }
       },
       (error) => {
-        this.AlertError();
+        this.Alert('Datos incorrectos', 'warning', '#F25D5D', '#fff' );
       }
     );
   }
@@ -78,39 +78,21 @@ export class LoginComponent {
     });
   }
 
-  AlertError() {
+   Alert(msg: any, status: any, bgColor: any, color : any ) {
     const Toast = Swal.mixin({
       toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 2000,
-      background: '#F25D5D',
-      color: '#FFF',
-      timerProgressBar: true,
-    });
-
-    Toast.fire({
-      icon: 'warning',
-      title: 'Usuario o contraseña incorrectos',
-      iconColor: '#FFF',
-    });
-  }
-
-  AlertSuccess() {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
+      width: "30%" ,
+      position: 'top',
       showConfirmButton: false,
       timer: 1500,
       timerProgressBar: true,
-      background: '#75CB8D',
-      color: '#FFF',
+      background:  bgColor,
+      color: color,
     });
 
     Toast.fire({
-      icon: 'success',
-      title: `Autenticación correcta`,
-      text: "Toast with custom target",
+      icon: status,
+      title: msg,
       iconColor: '#fff',
     });
   }

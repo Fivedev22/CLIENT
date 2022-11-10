@@ -8,18 +8,17 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css']
+  styleUrls: ['./forgot-password.component.css'],
 })
 export class ForgotPasswordComponent implements OnInit {
-
   public formularioIngreso!: FormGroup;
   usuario!: ISolicitarRestablecerContrasenia;
 
-  constructor( 
+  constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService,
-    ) { }
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     // this.formularioIngreso = this.initForm();
@@ -31,88 +30,49 @@ export class ForgotPasswordComponent implements OnInit {
     });
   }
 
-  sendEmail(){
-    this.usuario = new ISolicitarRestablecerContrasenia(this.formularioIngreso.get('correo')?.value);
+  sendEmail() {
+    this.usuario = new ISolicitarRestablecerContrasenia(
+      this.formularioIngreso.get('correo')?.value
+    );
 
     console.log(this.usuario);
-    let emailUser: any = this.usuario.correo
+    let emailUser: any = this.usuario.correo;
     console.log(emailUser);
-   
- 
 
-  
-  this.authService.solicitarRestablecerContrasenia(this.usuario).subscribe( 
-    data => {
-   
-      if(!data){
-        this.AlertError();
-        alert('ups...')
-      }else{
-        this.AlertSuccess();
-        console.log(data.msg);
-        localStorage.setItem('tokenpass', data.msg)
+    this.authService.solicitarRestablecerContrasenia(this.usuario).subscribe(
+      (data) => {
+        if (!data) {
+          this.Alert('Correo incorrecto', 'warning', '#F25D5D', '#fff');
+          alert('ups...');
+        } else {
+          this.Alert('Te enviamos un correo', 'success', '#75CB8D', '#fff');
+
+          console.log(data.msg);
+          localStorage.setItem('tokenpass', data.msg);
+        }
+      },
+      (error) => {
+        this.Alert('Correo incorrecto', 'warning', '#F25D5D', '#fff');
       }
-    
-     
-    },
-    error => {
-      this.AlertError();
-     
-    }
-    
-    )
-
+    );
   }
 
-  AlertError() {
+  Alert(msg: any, status: any, bgColor: any, color: any) {
     const Toast = Swal.mixin({
       toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 2000,
-      background: '#F25D5D',
-      color: '#FFF',
-      timerProgressBar: true,
-    });
-
-    Toast.fire({
-      icon: 'warning',
-      title: 'Email incorrecto',
-      iconColor: '#FFF',
-    });
-  }
-
-  AlertSuccess() {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
+      width: '30%',
+      position: 'top',
       showConfirmButton: false,
       timer: 1500,
       timerProgressBar: true,
-      background: '#75CB8D',
-      color: '#FFF',
+      background: bgColor,
+      color: color,
     });
 
     Toast.fire({
-      icon: 'success',
-      title: `Te enviamos un correo`,
+      icon: status,
+      title: msg,
       iconColor: '#fff',
     });
   }
-  // initForm(): FormGroup {
-  //   return this.formBuilder.group(
-  //     {
-  //       correo: [
-  //         '',
-  //         [
-  //           Validators.required,
-  //           Validators.email,
-  //           Validators.minLength(5),
-  //           Validators.maxLength(30)
-  //         ]
-  //       ],
-  //     }
-  //   )
-  // }
-
 }

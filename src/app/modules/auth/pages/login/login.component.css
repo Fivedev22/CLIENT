@@ -43,3 +43,8 @@
   text-align: center;
   color: rgb(164, 164, 164);
 }
+
+.swal2-popup {
+  font-size: 1rem !important;
+  font-family: Georgia, serif;
+}
