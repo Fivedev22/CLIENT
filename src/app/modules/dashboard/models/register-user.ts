@@ -1,35 +1,34 @@
 export class IRegisterUser {
-  nombre: string;
-  apellido: string;
-  email: string;
-  telefono: string;
-  documento: string;
-  extranjero: boolean;
-  provincia: string;
-  genero: string;
-  tipoDocumento: string;
+
+  name: string;
+	last_name: string;
+	gender_type: number;
+	phone_number: number;
+	email: string;
+	document: string;
+	document_type: number;
+	is_foreign: boolean;
+	province: number;
 
   constructor(
-    nombre: string,
-    apellido: string,
+    name: string,
+    last_name: string,
+    gender_type: number,
+    phone_number: number,
     email: string,
-    telefono: string,
-    documento: string,
-    extranjero: boolean,
-    provincia: string,
-
-    genero: string,
-    tipoDocumento: string
+    document: string,
+    document_type: number,
+    is_foreign: boolean,
+    province: number
   ) {
-    this.nombre = nombre;
-    this.apellido = apellido;
+    this.name = name;
+    this.last_name = last_name;
+    this.gender_type = gender_type;
+    this.phone_number = phone_number;
     this.email = email;
-    this.telefono = telefono;
-    this.documento = documento;
-    this.extranjero = extranjero;
-    this.provincia = provincia;
-
-    this.genero = genero;
-    this.tipoDocumento = tipoDocumento;
+    this.document = document;
+    this.document_type = document_type;
+    this.is_foreign = is_foreign;
+    this.province = province;
   }
 }

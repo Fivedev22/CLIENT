@@ -29,7 +29,7 @@ const routes: Routes = [
         component: ForgotPasswordComponent
       },
       {
-        path: 'restablecer-contrasenia/:token',
+        path: 'password-reset/:token',
         component: ResetPasswordComponent
       }
     ]

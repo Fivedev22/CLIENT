@@ -10,7 +10,7 @@ import { IRegisterUser } from '../models/register-user';
 
 export class DashboardService {
 
-  AUTH_URL = 'http://localhost:3000/cliente/'
+  AUTH_URL = 'http://localhost:3000/api/client/'
 
 
   constructor(
@@ -18,8 +18,17 @@ export class DashboardService {
     private jwtHelper: JwtHelperService
   ) { }
 
+
+  public getAllClient():  Observable<any> {
+    return this.http.get(`${this.AUTH_URL}`)
+  }
+
   public registerClient(body: IRegisterUser):  Observable<any> {
-    return this.http.post(`${this.AUTH_URL}registrar`, body)
+    return this.http.post(`${this.AUTH_URL}create`, body)
+  }
+
+  public deleteClient(id:number):  Observable<any> {
+    return this.http.delete(`${this.AUTH_URL}/remove, id`)
   }
 
  

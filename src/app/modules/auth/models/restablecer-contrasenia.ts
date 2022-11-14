@@ -1,10 +1,10 @@
 export class IRestablecerContrasenia {
-    resetear_contrasenia: string;
-    contrasenia: string;
+     reset_token: string;
+     new_password: string;
 
 
-    constructor(resetear_contrasenia: string, contrasenia: string) {
-        this.resetear_contrasenia = resetear_contrasenia;
-        this.contrasenia = contrasenia
+    constructor( reset_token: string,  new_password: string) {
+        this. reset_token =  reset_token;
+        this. new_password =  new_password
     }
 }

@@ -1,7 +1,7 @@
 export class ISolicitarRestablecerContrasenia {
-    correo: string;
+    email: string;
 
-    constructor(correo: string) {
-        this.correo = correo;
+    constructor(email: string) {
+        this.email = email;
     }
 }

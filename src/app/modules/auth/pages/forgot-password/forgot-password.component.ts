@@ -36,7 +36,7 @@ export class ForgotPasswordComponent implements OnInit {
     );
 
     console.log(this.usuario);
-    let emailUser: any = this.usuario.correo;
+    let emailUser: any = this.usuario.email;
     console.log(emailUser);
 
     this.authService.solicitarRestablecerContrasenia(this.usuario).subscribe(
@@ -47,8 +47,8 @@ export class ForgotPasswordComponent implements OnInit {
         } else {
           this.Alert('Te enviamos un correo', 'success', '#75CB8D', '#fff');
 
-          console.log(data.msg);
-          localStorage.setItem('tokenpass', data.msg);
+          console.log(data.resetToken);
+          localStorage.setItem('tokenpass', data.resetToken);
         }
       },
       (error) => {

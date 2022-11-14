@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 
 export class AuthService {
 
-  AUTH_URL = 'http://localhost:3000/usuario/'
+  AUTH_URL = 'http://localhost:3000/api/auth/'
 
 
   constructor(
@@ -19,15 +19,15 @@ export class AuthService {
   ) { }
 
   public ingresar(body: IIngresar):  Observable<any> {
-    return this.http.post(`${this.AUTH_URL}ingreso`, body)
+    return this.http.post(`${this.AUTH_URL}login`, body)
   }
 
   public restablecerContrasenia(body: IRestablecerContrasenia): Observable<any> {
-    return this.http.put(`${this.AUTH_URL}restablecer-contrasenia`, body)
+    return this.http.put(`${this.AUTH_URL}password-reset`, body)
   }
 
   public solicitarRestablecerContrasenia(body: ISolicitarRestablecerContrasenia): Observable<any> {
-    return this.http.post(`${this.AUTH_URL}solicitar-restablecer-contrasenia`, body)
+    return this.http.put(`${this.AUTH_URL}password-reset-request`, body)
   }
 
   public isAuth(): boolean {

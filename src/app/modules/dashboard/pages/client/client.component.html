@@ -16,31 +16,31 @@
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="Nombre">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-      <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.name }}</td>
     </ng-container>
     <ng-container matColumnDef="Apellido">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
-      <td mat-cell *matCellDef="let row">{{ row.apellido }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.last_name }}</td>
     </ng-container>
     <ng-container matColumnDef="Documento">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Documento</th>
-      <td mat-cell *matCellDef="let row">{{ row.documento }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.document }}</td>
     </ng-container>
     <ng-container matColumnDef="Extranjero">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Extranjero</th>
-      <td mat-cell *matCellDef="let row">{{ row.extranjero }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.is_foreign }}</td>
     </ng-container>
     <ng-container matColumnDef="Provincia">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Provincia</th>
-      <td mat-cell *matCellDef="let row">{{ row.provincia }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.province.province_name }}</td>
     </ng-container>
-    <ng-container matColumnDef="Email">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+    <ng-container matColumnDef="Correo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Correo</th>
       <td mat-cell *matCellDef="let row">{{ row.email }}</td>
     </ng-container>
     <ng-container matColumnDef="Telefono">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Telefono</th>
-      <td mat-cell *matCellDef="let row">{{ row.telefono }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.phone_number }}</td>
     </ng-container>
     <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
@@ -49,7 +49,7 @@
           <button>
             <mat-icon>edit</mat-icon>
           </button>
-          <button>
+          <button (click)="openDialogDeleteClient()">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
@@ -95,11 +95,11 @@
       </p>
       <p>
         <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
+          <mat-label>Correo</mat-label>
           <input
             matInput
-            placeholder="Ingrese su Email"
-            formControlName="email"
+            placeholder="Ingrese su Correo"
+            formControlName="correo"
           />
         </mat-form-field>
       </p>
@@ -120,18 +120,25 @@
             matInput
             placeholder="Ingrese su Documento"
             formControlName="documento"
+            
           />
         </mat-form-field>
       </p>
       <p>
-        <mat-form-field appearance="outline">
+        <input 
+        placeholder="Ingrese su Extranjero"
+            formControlName="extranjero"
+            type="checkbox"
+        />
+        <!-- <mat-form-field appearance="outline">
           <mat-label>Extranjero</mat-label>
           <input
             matInput
             placeholder="Ingrese su Extranjero"
             formControlName="extranjero"
+            
           />
-        </mat-form-field>
+        </mat-form-field> -->
       </p>
       <p>
         <mat-form-field appearance="outline">
@@ -140,6 +147,7 @@
             matInput
             placeholder="Ingrese su Provincia"
             formControlName="provincia"
+            type="number"
           />
         </mat-form-field>
       </p>
@@ -150,6 +158,7 @@
             matInput
             placeholder="Ingrese su genero"
             formControlName="genero"
+            type="number"
           />
         </mat-form-field>
       </p>
@@ -160,13 +169,35 @@
             matInput
             placeholder="Ingrese su tipo documento "
             formControlName="tipoDocumento"
+            type="number"
           />
         </mat-form-field>
       </p>
     </div>
     <div mat-dialog-actions>
-      <button mat-button mat-dialog-close>Close</button>
-      <button mat-stroked-button (click)="regCliente()">Guardar</button>
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-stroked-button (click)="regCliente()" [disabled]="formularioRegCliente.invalid">Guardar</button>
     </div>
   </form>
+</ng-template>
+<ng-template #deleteDialog>
+  <form [formGroup]="formularioRegCliente">
+    <div>
+      <h1>Eliminar</h1>
+      <!-- <button mat-button mat-dialog-close mat-icon>
+                <mat-icon>close</mat-icon>
+            </button> -->
+    </div>
+    <div mat-dialog-content>
+      <p>¿Desea eliminar al cliente?</p>
+      
+      </div>
+      
+      
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-stroked-button  [disabled]="formularioRegCliente.invalid">Eliminar</button>
+    </div>
+    </form>
+  
 </ng-template>

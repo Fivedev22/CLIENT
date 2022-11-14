@@ -33,26 +33,35 @@ export class LoginComponent {
       this.formularioIngreso.get('contrasenia')?.value
     );
 
+    console.log(datosUsuario)
+
     this.authService.ingresar(datosUsuario).subscribe(
       (data) => {
+
+        console.log(data)
+
         if (!data) {
+          console.log(data)
           this.Alert('Datos incorrectos', 'warning', '#F25D5D', '#fff' );
         } else {
           this.Alert('Autenticación correcta', 'success', '#75CB8D', '#fff' );
+          console.log(data)
           localStorage.setItem(
             'name',
             this.formularioIngreso.get('usuario')?.value
           );
 
           setTimeout(() => {
-            this.tokenService.setToken(data.mensaje);
-            localStorage.setItem('token', data.mensaje);
+            this.tokenService.setToken(data.token);
+            localStorage.setItem('token', data.token);
             this.router.navigate(['/dashboard']);
           }, 1900);
         }
       },
       (error) => {
+        console.log(error)
         this.Alert('Datos incorrectos', 'warning', '#F25D5D', '#fff' );
+        
       }
     );
   }
