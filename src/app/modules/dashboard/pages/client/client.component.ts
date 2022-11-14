@@ -139,9 +139,6 @@ export class ClientComponent implements OnInit {
 
   // delete client
 
-
-
-
   deleteCliente(){
       this.dashboardService.deleteClient(1).subscribe()
     }
@@ -216,6 +213,4 @@ export class ClientComponent implements OnInit {
       ],
     });
   }
-
-  getClients() {}
 }
