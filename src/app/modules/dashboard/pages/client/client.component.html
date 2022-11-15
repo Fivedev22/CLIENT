@@ -14,6 +14,10 @@
 
 <div class="content-table-client">
   <table mat-table [dataSource]="dataSource" matSort>
+    <!-- <ng-container matColumnDef="ID">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.id_client }}</td>
+    </ng-container> -->
     <ng-container matColumnDef="Nombre">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
       <td mat-cell *matCellDef="let row">{{ row.name }}</td>
@@ -46,10 +50,10 @@
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td mat-cell *matCellDef="let row">
         <div fxflex xLayout="row" fxLayoutAlign="start center">
-          <button>
+          <button (click)="editCliente(row.id_client)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button (click)="openDialogDeleteClient()">
+          <button (click)="deleteCliente(row.id_client, row.name)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
@@ -180,24 +184,120 @@
     </div>
   </form>
 </ng-template>
-<ng-template #deleteDialog>
-  <form [formGroup]="formularioRegCliente">
+<ng-template #editDialog>
+  <form [formGroup]="formularioRegCliente"  >
     <div>
-      <h1>Eliminar</h1>
+      <h1>Editar</h1>
       <!-- <button mat-button mat-dialog-close mat-icon>
                 <mat-icon>close</mat-icon>
             </button> -->
     </div>
     <div mat-dialog-content>
-      <p>¿Desea eliminar al cliente?</p>
-      
-      </div>
-      
-      
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese su nombre"
+            formControlName="nombre"
+            name="name"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese su apellido"
+            formControlName="apellido"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Correo</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese su Correo"
+            formControlName="correo"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Telefono</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese su Telefono"
+            formControlName="telefono"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Documento</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese su Documento"
+            formControlName="documento"
+            
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <input 
+        placeholder="Ingrese su Extranjero"
+            formControlName="extranjero"
+            type="checkbox"
+        />
+        <!-- <mat-form-field appearance="outline">
+          <mat-label>Extranjero</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese su Extranjero"
+            formControlName="extranjero"
+            
+          />
+        </mat-form-field> -->
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Provincia</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese su Provincia"
+            formControlName="provincia"
+            type="number"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Genero</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese su genero"
+            formControlName="genero"
+            type="number"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo documento</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese su tipo documento "
+            formControlName="tipoDocumento"
+            type="number"
+          />
+        </mat-form-field>
+      </p>
+    </div>
     <div mat-dialog-actions>
       <button mat-button mat-dialog-close>Cancelar</button>
-      <button mat-stroked-button  [disabled]="formularioRegCliente.invalid">Eliminar</button>
+      <button mat-stroked-button (click)="regCliente()" [disabled]="formularioRegCliente.invalid">Guardar</button>
     </div>
-    </form>
-  
+  </form>
 </ng-template>

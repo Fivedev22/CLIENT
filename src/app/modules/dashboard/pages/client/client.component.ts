@@ -7,8 +7,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { IRegisterUser } from '../../models/register-user';
 import { DashboardService } from '../../services/dashboard.service';
+import { Router } from '@angular/router';
 
 interface IClient {
+  id_client?: string;
   name?: string;
   last_name?: string;
   document?: string;
@@ -26,7 +28,7 @@ interface IClient {
 export class ClientComponent implements OnInit {
   public formularioRegCliente!: FormGroup;
 
-  dataSource!: MatTableDataSource<IClient>;
+  dataSource: MatTableDataSource<IClient>;
   clients: IClient[];
 
   columns: string[] = [
@@ -43,43 +45,17 @@ export class ClientComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild('secondDialog') secondDialog!: TemplateRef<any>;
-  @ViewChild('deleteDialog') deleteDialog!: TemplateRef<any>;
+  @ViewChild('editDialog') editDialog!: TemplateRef<any>;
   
 
   constructor(
     public matDialog: MatDialog,
     public formBuilder: FormBuilder,
-    public dashboardService: DashboardService
+    public dashboardService: DashboardService,
+    private router: Router
   ) {
     this.clients = [];
-    // {
-    //   nombre: 'Juan',
-    //   apellido: 'Calero',
-    //   documento: '43231250',
-    //   extranjero: 'No',
-    //   provincia: 'Córdoba',
-    //   correo: 'marcelocalero5@gmail.com',
-    //   telefono: '3516538808',
-    // },
-    // {
-    //   nombre: 'Nicolas',
-    //   apellido: 'Zalazar',
-    //   documento: '43231251',
-    //   extranjero: 'No',
-    //   provincia: 'Córdoba',
-    //   correo: 'nicolaszalazar@gmail.com',
-    //   telefono: '3516538809',
-    // },
-
-    this.dashboardService.getAllClient().subscribe(
-      (data) => {
-        console.log(data.map((client: any) => client));
-        this.dataSource = new MatTableDataSource(data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.dataSource = new MatTableDataSource(this.clients);
   }
 
   ngOnInit(): void {
@@ -87,6 +63,7 @@ export class ClientComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.paginator._intl.itemsPerPageLabel = 'Elementos por página';
     this.formularioRegCliente = this.initForm();
+    this.getClients();
   }
 
   applyFilter(event: Event) {
@@ -108,8 +85,10 @@ export class ClientComponent implements OnInit {
   openDialogWithoutRef() {
     this.matDialog.open(this.secondDialog, { width: '800px' });
   }
-  openDialogDeleteClient(){
-    this.matDialog.open(this.deleteDialog, { width: '800px' });
+  openDialogDeleteClient(id:any){
+    console.log(id)
+    this.matDialog.open(this.editDialog, { width: '800px' });
+    
   }
 
   regCliente() {
@@ -137,10 +116,35 @@ export class ClientComponent implements OnInit {
     );
   }
 
+  getClients(){
+    this.dashboardService.getAllClient().subscribe(
+      (data) => {
+        this.dataSource = new MatTableDataSource(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
   // delete client
 
-  deleteCliente(){
-      this.dashboardService.deleteClient(1).subscribe()
+  deleteCliente(id:any, name:any){
+    this.AlertDelete(id, name)
+    }
+
+  editCliente(id:any){
+      this.dashboardService.getIOneClient(id).subscribe(
+        (data) => {
+          console.log(data)
+          this.clients = data
+          console.log(this.clients)
+          this.openDialogDeleteClient(id)
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      
     }
 
   initForm(): FormGroup {
@@ -213,4 +217,40 @@ export class ClientComponent implements OnInit {
       ],
     });
   }
+
+    // alertas
+    AlertDelete(id:any, name:any){
+     Swal.fire({
+         title: 'Eliminar cliente',
+         text: `¿Esta seguro de eliminar el cliente ${name}  ? `,
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#212121',
+         cancelButtonColor: '#DA1212',
+         confirmButtonText: 'Eliminar',
+       }).then((result) => {
+         if (result.isConfirmed) {
+          this.dashboardService.deleteClient(id).subscribe(
+            (data) =>{
+              console.log(data)
+           
+            }, error =>{
+              console.log(error)
+            }
+          )
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Cliente eliminado correctamente',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          setTimeout(() => {
+            location.reload();
+          }, 1500);
+         
+         }
+        
+       })
+     }
 }

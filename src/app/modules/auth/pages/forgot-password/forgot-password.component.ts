@@ -47,8 +47,8 @@ export class ForgotPasswordComponent implements OnInit {
         } else {
           this.Alert('Te enviamos un correo', 'success', '#75CB8D', '#fff');
 
-          console.log(data.resetToken);
-          localStorage.setItem('tokenpass', data.resetToken);
+          console.log(data.token);
+          localStorage.setItem('tokenpass', data.token);
         }
       },
       (error) => {

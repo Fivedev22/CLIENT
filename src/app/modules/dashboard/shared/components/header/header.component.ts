@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
 
   cerrarSesion(){
     localStorage.clear()
-    this.router.navigate(['/login'])
+    this.router.navigate(['/auth'])
   }
 
 }

@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './modules/auth/pages/forgot-password/fo
 import { LoginComponent } from './modules/auth/pages/login/login.component';
 import { ResetPasswordComponent } from './modules/auth/pages/reset-password/reset-password.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { AdminComponent } from './modules/dashboard/pages/admin/admin.component';
 import { ClientComponent } from './modules/dashboard/pages/client/client.component';
 import { ReservasComponent } from './modules/dashboard/pages/reservas/reservas.component';
 import { WebComponent } from './modules/web/web.component';
@@ -17,7 +18,7 @@ const routes: Routes = [
     component: WebComponent,
   },
   {
-    path: 'login',
+    path: 'auth',
     component: AuthComponent,
     children: [
       {
@@ -39,6 +40,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: DashboardComponent,
     children: [
+      {
+        path: '',
+        component: AdminComponent
+      },
       {
         path: 'cliente',
         component: ClientComponent

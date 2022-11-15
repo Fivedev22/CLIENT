@@ -50,7 +50,7 @@ export class ResetPasswordComponent implements OnInit {
         (data) => {
           AlertSuccess()
           console.log(data);
-          this.router.navigate(['/login']);
+          this.router.navigate(['/auth']);
         },
         (error) => {
           console.log(error);

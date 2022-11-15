@@ -14,6 +14,6 @@ export class WebComponent implements OnInit {
   }
 
   navigateLogin(){
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth']);
   }
 }

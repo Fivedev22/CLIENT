@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DashboardComponent } from './dashboard.component';
 import { ReservasComponent } from './pages/reservas/reservas.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdminComponent } from './pages/admin/admin.component';
 
 
 
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DashboardComponent,
     ClientComponent,
     ReservasComponent,
+    AdminComponent,
   ],
   imports: [
     CommonModule,
