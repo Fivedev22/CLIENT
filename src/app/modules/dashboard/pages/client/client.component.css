@@ -4,39 +4,39 @@ table {
     padding: 20px;
 }
 
-.content-client button {
-    background-color: #898989;
-    color: #FFFFFF;
-    font-weight: 400;
-    border-radius: 5px;
+.mat-icon {
+    font-size: 18px;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    min-width: 400px;
 }
 
 .mat-paginator {
     border-radius: 0px 0px 10px 10px;
 }
 
-.mat-form-field {
-    min-width: 260px !important;
+td,
+th {
+    width: 10%;
 }
 
-.content-client {
-    width: 100%;
-    padding: 10px 0px;
+.container-table {
+    max-width: 100%;
+    margin: 0 auto;
 }
 
-.content-table-client {
-    padding: 15px;
-    border-radius: 10px;
-    background-color: #F4F5F7;
+.container-table-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.content-table-client button {
-    border: none;
-    background-color: transparent;
-    margin: 0px;
-    cursor: pointer;
-}
 
-.mat-dialog-content .mat-form-field {
-    min-width: 100% !important;
+.content-client button {
+    background-color: #898989;
+    color: #FFFFFF;
+    font-weight: 400;
+    border-radius: 5px;
 }

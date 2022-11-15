@@ -1,0 +1,179 @@
+<div mat-dialog-title>
+    <h1>{{actionTitle}}</h1>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-content>
+    <mat-grid-list cols="2" rowHeight="2:0.5" gutterSize="15px">
+        <form [formGroup]="clientForm" autocomplete="off" novalidate>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="name" matInput placeholder="Nombre" type="text">
+                    <mat-hint align="end">Campo requerido</mat-hint>
+                    <mat-error align="end" *ngIf="hasError('name','pattern')">
+                        <strong>Este campo no acepta numeros o caracteres especiales</strong>
+                    </mat-error>
+                    <mat-error align=" end" *ngIf="hasError('name','required')"><strong>Campo requerido</strong>
+                    </mat-error>
+                    <mat-error align="end" *ngIf="hasError('name','minlength')">Minimo <strong>3 caracteres</strong>
+                    </mat-error>
+                    <mat-error align="end" *ngIf="hasError('name','maxlength')">Maximo <strong>20 caracteres</strong>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Apellido</mat-label>
+                    <input formControlName="last_name" matInput placeholder="Apellido" type="text">
+                    <mat-hint align="end">Campo requerido</mat-hint>
+                    <mat-error align="end" *ngIf="hasError('last_name','pattern')">
+                        <strong>Este campo no acepta numeros o caracteres especiales</strong>
+                    </mat-error>
+                    <mat-error align=" end" *ngIf="hasError('last_name','required')"><strong>Campo requerido</strong>
+                    </mat-error>
+                    <mat-error align="end" *ngIf="hasError('last_name','minlength')">Minimo <strong>3
+                            caracteres</strong>
+                    </mat-error>
+                    <mat-error align="end" *ngIf="hasError('last_name','maxlength')">Maximo <strong>20
+                            caracteres</strong>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" matInput placeholder="Email" type="email">
+                    <mat-hint align="end">Campo requerido - Ejemplo: ejemplo@gmail.com</mat-hint>
+                    <mat-error align="end" *ngIf="hasError('email','pattern')">
+                        <strong>Este campo no acepta el formato de email</strong>
+                    </mat-error>
+                    <mat-error align=" end" *ngIf="hasError('email','required')"><strong>Campo requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Número de teléfono</mat-label>
+                    <input formControlName="phone_number" matInput placeholder="Número de teléfono" type="text">
+                    <mat-hint align="end">Campo requerido</mat-hint>
+                    <mat-error align="end" *ngIf="hasError('phone_number','pattern')">
+                        <strong>Este campo no acepta letras o caracteres especiales</strong>
+                    </mat-error>
+                    <mat-error align=" end" *ngIf="hasError('phone_number','required')">
+                        <strong>Campo requerido</strong>
+                    </mat-error>
+                    <mat-error align="end" *ngIf="hasError('phone_number','minlength')">
+                        <strong>Minimo 10 caracteres</strong>
+                    </mat-error>
+                    <mat-error align="end" *ngIf="hasError('phone_number','maxlength')">
+                        <strong>Maximo 20 caracteres</strong>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Genero</mat-label>
+                    <mat-select formControlName="gender_type" placeholder="Genero">
+                        <mat-option *ngFor="let genderType of genderTypes" [value]="genderType.id_gender_type">
+                            {{genderType.gender_type_name}}</mat-option>
+                    </mat-select>
+                    <mat-hint align="end">Campo requerido</mat-hint>
+                    <mat-error align=" end" *ngIf="hasError('gender_type','required')">
+                        <strong>Campo requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Tipo de documento</mat-label>
+                    <mat-select formControlName="document_type" placeholder="Tipo de documento">
+                        <mat-option *ngFor="let documentType of documentTypes" [value]="documentType.id_document_type">
+                            {{documentType.document_type_name}}</mat-option>
+                    </mat-select>
+                    <mat-hint align="end">Campo requerido</mat-hint>
+                    <mat-error align=" end" *ngIf="hasError('document_type','required')">
+                        <strong>Campo requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Número de documento</mat-label>
+                    <input formControlName="document" matInput placeholder="Documento" type="text">
+                    <mat-hint align="end">Campo requerido - Ejemplo: AAA000111</mat-hint>
+                    <mat-error align="end" *ngIf="hasError('document','pattern')">
+                        <strong>Este campo no acepta caracteres especiales</strong>
+                    </mat-error>
+                    <mat-error align=" end" *ngIf="hasError('document','required')">
+                        <strong>Campo requerido</strong>
+                    </mat-error>
+                    <mat-error align="end" *ngIf="hasError('document','minlength')">
+                        <strong>Minimo 8 caracteres</strong>
+                    </mat-error>
+                    <mat-error align="end" *ngIf="hasError('document','maxlength')">
+                        <strong>Maximo 20 caracteres</strong>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Extranjero</mat-label>
+                    <mat-select formControlName="is_foreign" placeholder="Extranjero"
+                        (selectionChange)="changeStateProvince()">
+                        <mat-option *ngFor="let foreign of foreignOptions" [value]="foreign.id">{{foreign.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint align="end">Campo requerido</mat-hint>
+                    <mat-error align=" end" *ngIf="hasError('is_foreign','required')">
+                        <strong>Campo requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Provincia</mat-label>
+                    <mat-select formControlName="province" placeholder="Provincia">
+                        <mat-option *ngFor="let province of provinces" [value]="province.id_province">
+                            {{province.province_name}}</mat-option>
+                    </mat-select>
+                    <mat-hint align="end">Campo requerido</mat-hint>
+                    <mat-error align=" end" *ngIf="hasError('province','required')">
+                        <strong>Campo requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+        </form>
+
+    </mat-grid-list>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close color="warn">Cerrar</button>
+    <button mat-stroked-button color="basic" [disabled]="clientForm.invalid"
+        (click)="sendClient()">{{actionButton}}</button>
+</div>
+
+
+<swal #createAlert
+    [swalOptions]="{ toast: true, position: 'top',width: 500,showConfirmButton: false,timer: 1800,icon: 'success',title: 'Se registro correctamente'}">
+</swal>
+
+<swal #updateAlert
+    [swalOptions]="{ toast: true, position: 'top',width: 500,showConfirmButton: false,timer: 1800,icon: 'success',title: 'Se modifico correctamente'}">
+</swal>
+
+<swal #errorAlert
+    [swalOptions]="{ toast: true,position: 'top',width: 500,showConfirmButton: false,timer: 1800,icon: 'warning',title: 'Ha ocurrido un problema'}">
+</swal>

@@ -18,7 +18,7 @@ export class ForgotPasswordComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // this.formularioIngreso = this.initForm();
@@ -47,8 +47,8 @@ export class ForgotPasswordComponent implements OnInit {
         } else {
           this.Alert('Te enviamos un correo', 'success', '#75CB8D', '#fff');
 
-          console.log(data.token);
-          localStorage.setItem('tokenpass', data.token);
+          console.log(data.resetToken);
+          localStorage.setItem('tokenpass', data.resetToken);
         }
       },
       (error) => {

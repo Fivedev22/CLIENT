@@ -1,0 +1,19 @@
+mat-form-field {
+    width: 100%;
+}
+
+.mat-dialog-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.mat-dialog-content {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.mat-dialog-title h1 {
+    margin: 0px
+}

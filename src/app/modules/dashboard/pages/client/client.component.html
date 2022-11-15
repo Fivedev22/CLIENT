@@ -1,303 +1,67 @@
-<h1>Cliente</h1>
-<div class="content-client">
-  <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-stroked-button (click)="openDialogWithoutRef()">Nuevo</button>
-    <mat-form-field appearance="outline">
-      <mat-label>Buscar</mat-label>
-      <input matInput placeholder="Ex. Juan" (keyup)="applyFilter($event)" />
-      <div matSuffix mat-icon.button>
+<h1 style="padding: 10px;">Clientes</h1>
+<div class="container-table">
+  <div class="container-table-head">
+    <button mat-raised-button color="link" (click)="openFormCreateClient()">Nuevo cliente</button>
+    <mat-form-field appearance="standard">
+      <mat-label>Buscar cliente</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Anahí" #input>
+      <div matSuffix mat-icon-button>
         <mat-icon>search</mat-icon>
       </div>
     </mat-form-field>
   </div>
-</div>
+  <div class="mat-elevation-z1">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+      </ng-container>
 
-<div class="content-table-client">
-  <table mat-table [dataSource]="dataSource" matSort>
-    <!-- <ng-container matColumnDef="ID">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-      <td mat-cell *matCellDef="let row">{{ row.id_client }}</td>
-    </ng-container> -->
-    <ng-container matColumnDef="Nombre">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-      <td mat-cell *matCellDef="let row">{{ row.name }}</td>
-    </ng-container>
-    <ng-container matColumnDef="Apellido">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
-      <td mat-cell *matCellDef="let row">{{ row.last_name }}</td>
-    </ng-container>
-    <ng-container matColumnDef="Documento">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Documento</th>
-      <td mat-cell *matCellDef="let row">{{ row.document }}</td>
-    </ng-container>
-    <ng-container matColumnDef="Extranjero">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Extranjero</th>
-      <td mat-cell *matCellDef="let row">{{ row.is_foreign }}</td>
-    </ng-container>
-    <ng-container matColumnDef="Provincia">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Provincia</th>
-      <td mat-cell *matCellDef="let row">{{ row.province.province_name }}</td>
-    </ng-container>
-    <ng-container matColumnDef="Correo">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Correo</th>
-      <td mat-cell *matCellDef="let row">{{ row.email }}</td>
-    </ng-container>
-    <ng-container matColumnDef="Telefono">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Telefono</th>
-      <td mat-cell *matCellDef="let row">{{ row.phone_number }}</td>
-    </ng-container>
-    <ng-container matColumnDef="Acciones">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
-      <td mat-cell *matCellDef="let row">
-        <div fxflex xLayout="row" fxLayoutAlign="start center">
-          <button (click)="editCliente(row.id_client)">
+      <ng-container matColumnDef="last_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
+        <td mat-cell *matCellDef="let row"> {{row.last_name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="document">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Documento </th>
+        <td mat-cell *matCellDef="let row"> {{row.document}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="is_foreign">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Extranjero </th>
+        <td mat-cell *matCellDef="let row"> {{row.is_foreign | foreign}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="province">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Provincia </th>
+        <td mat-cell *matCellDef="let row"> {{row.province | province}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="basic" (click)="openFormEditClient(row)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button (click)="deleteCliente(row.id_client, row.name, row.last_name)">
+          <button mat-icon-button color="warn" (click)="deleteClient(row.id_client, row.name, row.last_name)">
             <mat-icon>delete</mat-icon>
           </button>
-        </div>
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="columns"></tr>
-    <tr mat-row *matRowDef="let row; columns: columns"></tr>
-  </table>
-  <mat-paginator
-    [length]="clients.length"
-    [pageSize]="5"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-  ></mat-paginator>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef=" displayedColumns">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No hay datos que coincidan con el filtro: "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+  </div>
 </div>
-<ng-template #secondDialog>
-  <form [formGroup]="formularioRegCliente">
-    <div>
-      <h1>Registrar</h1>
-      <!-- <button mat-button mat-dialog-close mat-icon>
-                <mat-icon>close</mat-icon>
-            </button> -->
-    </div>
-    <div mat-dialog-content>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Nombre</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su nombre"
-            formControlName="nombre"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Apellido</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su apellido"
-            formControlName="apellido"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Correo</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su Correo"
-            formControlName="correo"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Telefono</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su Telefono"
-            formControlName="telefono"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Documento</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su Documento"
-            formControlName="documento"
-            
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <input 
-        placeholder="Ingrese su Extranjero"
-            formControlName="extranjero"
-            type="checkbox"
-        />
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>Extranjero</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su Extranjero"
-            formControlName="extranjero"
-            
-          />
-        </mat-form-field> -->
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Provincia</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su Provincia"
-            formControlName="provincia"
-            type="number"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Genero</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su genero"
-            formControlName="genero"
-            type="number"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Tipo documento</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su tipo documento "
-            formControlName="tipoDocumento"
-            type="number"
-          />
-        </mat-form-field>
-      </p>
-    </div>
-    <div mat-dialog-actions>
-      <button mat-button mat-dialog-close>Cancelar</button>
-      <button mat-stroked-button (click)="regCliente()" [disabled]="formularioRegCliente.invalid">Guardar</button>
-    </div>
-  </form>
-</ng-template>
-<ng-template #editDialog>
-  <form [formGroup]="formularioRegCliente"  >
-    <div>
-      <h1>Editar</h1>
-      <!-- <button mat-button mat-dialog-close mat-icon>
-                <mat-icon>close</mat-icon>
-            </button> -->
-    </div>
-    <div mat-dialog-content>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Nombre</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su nombre"
-            formControlName="nombre"
-            name="name"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Apellido</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su apellido"
-            formControlName="apellido"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Correo</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su Correo"
-            formControlName="correo"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Telefono</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su Telefono"
-            formControlName="telefono"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Documento</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su Documento"
-            formControlName="documento"
-            
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <input 
-        placeholder="Ingrese su Extranjero"
-            formControlName="extranjero"
-            type="checkbox"
-        />
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>Extranjero</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su Extranjero"
-            formControlName="extranjero"
-            
-          />
-        </mat-form-field> -->
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Provincia</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su Provincia"
-            formControlName="provincia"
-            type="number"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Genero</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su genero"
-            formControlName="genero"
-            type="number"
-          />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Tipo documento</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese su tipo documento "
-            formControlName="tipoDocumento"
-            type="number"
-          />
-        </mat-form-field>
-      </p>
-    </div>
-    <div mat-dialog-actions>
-      <button mat-button mat-dialog-close>Cancelar</button>
-      <button mat-stroked-button (click)="regCliente()" [disabled]="formularioRegCliente.invalid">Guardar</button>
-    </div>
-  </form>
-</ng-template>
