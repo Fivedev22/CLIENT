@@ -25,7 +25,7 @@ export class DashboardService {
     return this.http.delete(`${this.AUTH_URL}remove/ ${id}`);
   }
 
-  public getIOneClient(id: number): Observable<any> {
+  public getOneClient(id: number): Observable<any> {
     return this.http.get(`${this.AUTH_URL}${id} `);
   }
 }

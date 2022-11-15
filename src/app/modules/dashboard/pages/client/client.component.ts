@@ -128,12 +128,12 @@ export class ClientComponent implements OnInit {
   }
   // delete client
 
-  deleteCliente(id:any, name:any){
-    this.AlertDelete(id, name)
+  deleteCliente(id:any, name:any, apellido: any){
+    this.AlertDelete(id, name, apellido)
     }
 
   editCliente(id:any){
-      this.dashboardService.getIOneClient(id).subscribe(
+      this.dashboardService.getOneClient(id).subscribe(
         (data) => {
           console.log(data)
           this.clients = data
@@ -219,15 +219,17 @@ export class ClientComponent implements OnInit {
   }
 
     // alertas
-    AlertDelete(id:any, name:any){
+    AlertDelete(id:any, name:any, apellido:any){
      Swal.fire({
-         title: 'Eliminar cliente',
-         text: `¿Esta seguro de eliminar el cliente ${name}  ? `,
-         icon: 'warning',
+         title: '¿Desea eliminar el cliente?',
+         text: `${name} ${apellido}   `,
+         icon: 'error',
          showCancelButton: true,
          confirmButtonColor: '#212121',
-         cancelButtonColor: '#DA1212',
+         cancelButtonColor: '#B2B2B2',
          confirmButtonText: 'Eliminar',
+         cancelButtonText: 'Cancelar',
+         
        }).then((result) => {
          if (result.isConfirmed) {
           this.dashboardService.deleteClient(id).subscribe(
